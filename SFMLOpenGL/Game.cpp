@@ -28,6 +28,8 @@ int width;			// Width of texture
 int height;			// Height of texture
 int comp_count;		// Component of texture
 bool collided = false;
+bool jump = false;
+bool fall = false;
 
 unsigned char* img_data;		// image data
 
@@ -97,45 +99,51 @@ void Game::run()
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			{
-				if (player[3].y <= 2)
-				{
-					player = translate(player, glm::vec3(0, .5, 0));
-				}
+				player = translate(player, glm::vec3(0, 1.25, 0));
 
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				if (player[3].y >= 0)
 				{
-					player = translate(player, glm::vec3(0, -.5, 0));
+					player = translate(player, glm::vec3(0, -1.25, 0));
 				}
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				player = translate(player, glm::vec3(-1, 0, 0));
+				player = translate(player, glm::vec3(-1.25, 0, 0));
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{	
-					player = translate(player, glm::vec3(1, 0, 0));
+					player = translate(player, glm::vec3(1.25, 0, 0));
 			}
 			
-			
+
+
 		}
 		if (collided != true)
 		{
 
-			model[0] = translate(model[0], glm::vec3(0.0, 0.0, 0.3));
-			model[1] = translate(model[1], glm::vec3(0.0, 0.0, 0.5));
-			model[2] = translate(model[2], glm::vec3(0.0, 0.0, 0.75));
-			model[3] = translate(model[3], glm::vec3(0.0, 0.0, 0.25));
-			model[4] = translate(model[4], glm::vec3(0.0, 0.0, 0.3));
-			model[5] = translate(model[5], glm::vec3(0.0, 0.0, 0.6));
-			model[6] = translate(model[6], glm::vec3(0.0, 0.0, 0.5));
-			model[7] = translate(model[7], glm::vec3(0.0, 0.0, 0.45));
-			model[8] = translate(model[8], glm::vec3(0.0, 0.0, 0.8));
-			model[9] = translate(model[6], glm::vec3(0.0, 0.0, 0.5));
-			model[10] = translate(model[7], glm::vec3(0.0, 0.0, 0.45));
-			model[11] = translate(model[8], glm::vec3(0.0, 0.0, 0.8));
+			model[0] = translate(model[0], glm::vec3(0.0, 0.0, 0.46));
+			model[1] = translate(model[1], glm::vec3(0.0, 0.0, 0.35));
+			model[2] = translate(model[2], glm::vec3(0.0, 0.0, 0.6));
+			model[3] = translate(model[3], glm::vec3(0.0, 0.0, 0.5));
+			model[4] = translate(model[4], glm::vec3(0.0, 0.0, 0.4));
+			model[5] = translate(model[5], glm::vec3(0.0, 0.0, 0.25));
+			model[6] = translate(model[6], glm::vec3(0.0, 0.0, 0.65));
+			model[7] = translate(model[7], glm::vec3(0.0, 0.0, 0.3));
+			model[8] = translate(model[8], glm::vec3(0.0, 0.0, 0.38));
+			model[9] = translate(model[9], glm::vec3(0.0, 0.0, 0.75));
+			model[10] = translate(model[10], glm::vec3(0.0, 0.0, 0.35));
+			model[11] = translate(model[11], glm::vec3(0.0, 0.0, 0.54));
+		}
+
+		if (collided == true)
+		{
+			for (int i = 0; i < 12; i++)
+			{
+				model[i] = translate(model[i], vec3(0, -.15, 0));//remove 
+			}
 		}
 
 		render(model[0]);
@@ -364,23 +372,59 @@ void Game::initialize()
 		1.0f
 	);
 
+	model[3] = mat4(
+		1.0f					
+	);
+
+	model[4] = mat4(
+		1.0f
+	);
+
+	model[5] = mat4(
+		1.0f
+	);
+
+	model[6] = mat4(
+		1.0f					
+	);
+
+	model[7] = mat4(
+		1.0f
+	);
+
+	model[8] = mat4(
+		1.0f
+	);
+
+	model[9] = mat4(
+		1.0f					
+	);
+
+	model[10] = mat4(
+		1.0f
+	);
+
+	model[11] = mat4(
+		1.0f
+	);
+
 	player = mat4(
 		1.0f
 	);
 
 	player = translate(player, vec3(0, 0, 0));
-	model[0] = translate(model[0], vec3(5, 0, -15));
-	model[1] = translate(model[1], vec3(-5, 0, -12));
-	model[2] = translate(model[2], vec3(-10, 0, -10));
-	model[3] = translate(model[3], vec3(10, 0, -20));
-	model[4] = translate(model[4], vec3(0, 0, -7));
-	model[5] = translate(model[3], vec3(6, 0, -40));
-	model[6] = translate(model[4], vec3(2, 0, -35));
-	model[7] = translate(model[3], vec3(5, 0, -40));
-	model[8] = translate(model[4], vec3(9, 0, -30));
-	model[6] = translate(model[4], vec3(-2, 0, -35));
-	model[7] = translate(model[3], vec3(-5, 0, -40));
-	model[8] = translate(model[4], vec3(-9, 0, -30));
+	model[0] = translate(model[0], vec3(2.5, 0, -35));
+	model[1] = translate(model[1], vec3(-2.5, 0, -35));
+	model[2] = translate(model[2], vec3(-5, 0, -35));
+	model[3] = translate(model[3], vec3(5, 0, -35));
+	model[4] = translate(model[4], vec3(7.5, 0, -35));
+	model[5] = translate(model[5], vec3(-7.5, 0, -35));
+	model[6] = translate(model[6], vec3(-0, 0, -60));
+	model[7] = translate(model[7], vec3(2.5, 0, -60));
+	model[8] = translate(model[8], vec3(-2.5, 0, -60));
+	model[9] = translate(model[9], vec3(-5, 0, -60));
+	model[10] = translate(model[10], vec3(5, 0, -60));
+	model[11] = translate(model[11], vec3(-7, 0, -60));
 	
 
 	// Enable Depth Test
@@ -398,14 +442,16 @@ void Game::update()
 	//mvp = projection * view * model * player;
 	for (int i = 0; i < 12; i++)
 	{
-		if (model[i][3].z > 5)
+		
+		 if (model[i][3].z >= player[3].z && model[i][3].x == player[3].x && model[i][3].y ==player[3].y)
 		{
-			model[i] = translate(model[i], vec3(0, 0, -50));
-		}
-		if (model[i][3].z == player[3].z+1 && model[i][3].x==player[3].x)
-		{
-			std::cout << "collided" << endl;
+			std::cout << "collided" << endl;//tell if collided with player
 			collided = true;
+
+		}
+		else if (model[i][3].z > 5)
+		{
+			model[i] = translate(model[i], vec3(0, 0, -60));
 		}
 
 	}
