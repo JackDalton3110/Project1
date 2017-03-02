@@ -243,7 +243,7 @@ void Game::initialize()
 		//"	vec4 lightColor = vec4(1.0f, 0.0f, 0.0f, 1.0f); "
 		//"	fColor = vec4(0.50f, 0.50f, 0.50f, 1.0f);"
 		//"	fColor = texture2D(f_texture, uv);"
-		//"	fColor = color * texture2D(f_texture, uv);"
+		"	fColor = color * texture2D(f_texture, uv);"
 		//"	fColor = lightColor * texture2D(f_texture, uv);"
 		//"	fColor = color + texture2D(f_texture, uv);"
 		//"	fColor = color - texture2D(f_texture, uv);"
