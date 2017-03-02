@@ -27,6 +27,7 @@ const string filename = "texture_2.tga";
 int width;			// Width of texture
 int height;			// Height of texture
 int comp_count;		// Component of texture
+bool collided = false;
 
 unsigned char* img_data;		// image data
 
@@ -98,7 +99,7 @@ void Game::run()
 			{
 				if (player[3].y <= 2)
 				{
-					player = translate(player, glm::vec3(0, 1, 0));
+					player = translate(player, glm::vec3(0, .5, 0));
 				}
 
 			}
@@ -106,7 +107,7 @@ void Game::run()
 			{
 				if (player[3].y >= 0)
 				{
-					player = translate(player, glm::vec3(0, -1, 0));
+					player = translate(player, glm::vec3(0, -.5, 0));
 				}
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -120,19 +121,23 @@ void Game::run()
 			
 			
 		}
+		if (collided != true)
+		{
 
-		model[0] = translate(model[0], glm::vec3(0.0, 0.0, 0.3));
-		model[1] = translate(model[1], glm::vec3(0.0, 0.0, 0.5));
-		model[2] = translate(model[2], glm::vec3(0.0, 0.0, 0.75));
-		model[3] = translate(model[3], glm::vec3(0.0, 0.0, 0.25));
-		model[4] = translate(model[4], glm::vec3(0.0, 0.0, 0.3));
-		model[5] = translate(model[5], glm::vec3(0.0, 0.0, 0.6));
-		model[6] = translate(model[6], glm::vec3(0.0, 0.0, 0.5));
-		model[7] = translate(model[7], glm::vec3(0.0, 0.0, 0.45));
-		model[8] = translate(model[8], glm::vec3(0.0, 0.0, 0.8));
-		model[9] = translate(model[6], glm::vec3(0.0, 0.0, 0.5));
-		model[10] = translate(model[7], glm::vec3(0.0, 0.0, 0.45));
-		model[11] = translate(model[8], glm::vec3(0.0, 0.0, 0.8));
+			model[0] = translate(model[0], glm::vec3(0.0, 0.0, 0.3));
+			model[1] = translate(model[1], glm::vec3(0.0, 0.0, 0.5));
+			model[2] = translate(model[2], glm::vec3(0.0, 0.0, 0.75));
+			model[3] = translate(model[3], glm::vec3(0.0, 0.0, 0.25));
+			model[4] = translate(model[4], glm::vec3(0.0, 0.0, 0.3));
+			model[5] = translate(model[5], glm::vec3(0.0, 0.0, 0.6));
+			model[6] = translate(model[6], glm::vec3(0.0, 0.0, 0.5));
+			model[7] = translate(model[7], glm::vec3(0.0, 0.0, 0.45));
+			model[8] = translate(model[8], glm::vec3(0.0, 0.0, 0.8));
+			model[9] = translate(model[6], glm::vec3(0.0, 0.0, 0.5));
+			model[10] = translate(model[7], glm::vec3(0.0, 0.0, 0.45));
+			model[11] = translate(model[8], glm::vec3(0.0, 0.0, 0.8));
+		}
+
 		render(model[0]);
 		render(model[1]);
 		render(model[2]);
@@ -393,11 +398,18 @@ void Game::update()
 	//mvp = projection * view * model * player;
 	for (int i = 0; i < 12; i++)
 	{
-		if (model[i][3].z > 2)
+		if (model[i][3].z > 5)
 		{
 			model[i] = translate(model[i], vec3(0, 0, -50));
 		}
+		if (model[i][3].z == player[3].z+1 && model[i][3].x==player[3].x)
+		{
+			std::cout << "collided" << endl;
+			collided = true;
+		}
+
 	}
+
 }
 
 void Game::renderCube(mat4 &modelRef)
